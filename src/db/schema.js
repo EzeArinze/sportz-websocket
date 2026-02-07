@@ -9,18 +9,26 @@ import {
 } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
 
-const match_status = pgEnum("match_status", ["scheduled", "live", "finished"]);
+const matchStatusEnum = pgEnum("match_status", [
+  "scheduled",
+  "live",
+  "finished",
+]);
 
 export const matchTable = pgTable("match", {
-  id: text().primaryKey().$defaultFn(nanoid()).notNull(),
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => nanoid())
+    .notNull(),
+  sport: text().notNull(),
   homeTeam: text().notNull(),
   awayTeam: text().notNull(),
-  status: match_status().default("scheduled").notNull(),
-  homeScore: integer().default(0).notNull(),
-  awayScore: integer().default(0).notNull(),
+  status: matchStatusEnum().notNull().default("scheduled"),
   startTime: timestamp(),
   endTime: timestamp(),
-  createdAt: timestamp().defaultNow().notNull(),
+  homeScore: integer().notNull().default(0),
+  awayScore: integer().notNull().default(0),
+  createdAt: timestamp().notNull().defaultNow(),
 });
 
 export const commentary = pgTable("commentary", {
