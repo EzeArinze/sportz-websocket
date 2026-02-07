@@ -1,4 +1,5 @@
 import express from "express";
+import { matchRouter } from "./routes/matches.js";
 
 const app = express();
 const PORT = 8000;
@@ -9,6 +10,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Sportz API, enjoy your stay!");
 });
 
+app.use("/matches", matchRouter);
+
 app.listen(PORT, () => {
-  console.log(`Server is running on port: http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
