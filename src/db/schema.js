@@ -32,7 +32,10 @@ export const matchTable = pgTable("match", {
 });
 
 export const commentary = pgTable("commentary", {
-  id: text().primaryKey().$defaultFn(nanoid()).notNull(),
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => nanoid())
+    .notNull(),
   matchId: text()
     .references(() => matchTable.id)
     .notNull(),
