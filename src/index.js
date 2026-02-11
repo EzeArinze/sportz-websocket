@@ -1,4 +1,6 @@
-// import "dotenv/config";
+import AgentAPI from "apminsight";
+AgentAPI.config();
+
 import express from "express";
 import http from "http";
 import { matchRouter } from "./routes/matches.js";
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Sportz API, enjoy your stay!");
 });
 
+// while seeding data, we might want to disable security middleware to avoid spam issues.
 app.use(securityMiddleware());
 app.use("/matches", matchRouter);
 app.use("/matches/:id/commentary", commentaryRouter);
